@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import axiosinstance from '../axiosinstance';
 
 const AddBlog = () => {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const AddBlog = () => {
 
     if (location.state?.blog?._id) {
       // Update blog
-      axios.put(`http://localhost:3000/blogs/update/${location.state.blog._id}`, formData)
+      axiosinstance.put(`http://localhost:3000/blogs/update/${location.state.blog._id}`, formData)
         .then((res) => {
           console.log("Blog updated:", res.data);
           alert("Blog updated successfully!");
@@ -46,8 +47,8 @@ const AddBlog = () => {
           alert("Error updating blog");
         });
     } else {
-      // Add new blog
-      axios.post('http://localhost:3000/blogs/add', formData)
+      
+      axiosinstance.post('http://localhost:3000/blogs/add', formData)
         .then((res) => {
           console.log("Blog added:", res.data);
           alert("Blog added successfully!");

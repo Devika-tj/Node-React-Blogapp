@@ -6,9 +6,17 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const Navbar = () => {
+  let navigate = useNavigate();
+
+  let token=localStorage.getItem('token')
+  let removeItem = () => {
+  localStorage.removeItem('token');
+  navigate('/'); 
+};
   return (
     <div>
         <Box sx={{ flexGrow: 1 }}>
@@ -26,8 +34,13 @@ const Navbar = () => {
             BLOG APP
           </Typography>
           <Link to='/'><Button color="inherit" style={{color:'white'}}>Blogs</Button></Link>
+            {token &&(
+              <>
           <Link to='add'><Button color="inherit" style={{color:'white'}}>Add Blogs</Button></Link>
+          </>
+            )}
           <Link to='login'><Button color="inherit" style={{color:'white'}}>Login</Button></Link>
+          <Button onClick={removeItem} color="inherit" style={{color:'white'}}>Logout</Button>
         </Toolbar>
       </AppBar>
     </Box>

@@ -1,6 +1,7 @@
 const express=require('express')
 const app=express()
 const morgan = require('morgan');
+const jwt=require('jsonwebtoken')
 const cors = require('cors');
 require('dotenv').config()
 const connectDB=require('./db/connection')

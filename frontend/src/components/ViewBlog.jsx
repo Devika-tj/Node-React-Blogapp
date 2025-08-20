@@ -7,10 +7,12 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
+import axiosinstance from '../axiosinstance';
 
 const ViewBlog = () => {
   const [blogs, setblogs] = useState([]);
   const navigate = useNavigate(); 
+  let token=localStorage.getItem('token')
 
   useEffect(() => {
     axios.get("http://localhost:3000/blogs/")
@@ -24,7 +26,7 @@ const ViewBlog = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/blogs/delete/${id}`);
+      await axiosinstance.delete(`http://localhost:3000/blogs/delete/${id}`);
       setblogs(prevBlogs => prevBlogs.filter(blog => blog._id !== id));
     } catch (err) {
       console.error('Failed to delete blog:', err);
@@ -49,9 +51,14 @@ const ViewBlog = () => {
             </Typography>
           </CardContent>
           <CardActions>
+           <Button size="small" onClick={() => navigate(`/${blog._id}`)}>Learn More</Button>
+
+             {token &&(
+              <>
             <Button size="small" onClick={() => updateblog(blog)}>Update</Button>
-            <Button size="small">Learn More</Button>
             <Button size="small" onClick={() => handleDelete(blog._id)}>Delete</Button>
+            </>
+             )}
           </CardActions>
         </Card>
       ))}
